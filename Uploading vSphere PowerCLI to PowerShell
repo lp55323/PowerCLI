@@ -13,3 +13,4 @@
 } 
 LoadSnapins 
 
+Set-ExecutionPolicy RemoteSigned
