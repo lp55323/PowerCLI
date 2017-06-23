@@ -1,0 +1,41 @@
+Where-Object用法 ：
+  https://technet.microsoft.com/zh-cn/library/ee177028.aspx
+  The Where-Object cmdlet provides a way for you to filter data returned by other cmdlets. 
+  For example, by default the Get-Process cmdlet returns information about all the processes currently running on your computer. 
+  However, suppose you’re interested in only those processes using more than 200 handles. 
+  (We’re not sure why you’d be interested in that, but ….) To get back only that subset of processes, call Get-Process and then 
+  pipe the results through Where-Object  
+
+
+通过以下方式求和
+  (Get-VMhost -Location HK_Site2_Prod_Cluster_1).CpuUsageMhz 
+  4294
+  3925
+  3147
+  1947
+  (Get-VMhost -Location HK_Site2_Prod_Cluster_1).CpuUsageMhz | Measure-Object -Sum
+  Count    : 4
+  Average  : 
+  Sum      : 16769
+  Maximum  : 
+  Minimum  : 
+  Property : 
+
+powershell中显示messagebox
+  http://michlstechblog.info/blog/powershell-show-a-messagebox/     
+
+
+Copy-VMGuestFile用法：
+  https://www.vmware.com/support/developer/PowerCLI/PowerCLI41/html/Copy-VMGuestFile.html   
+  可以将本地文件(台式机,笔记本) 拷贝到vm 中. . 比如有的时候想要向vm中拷贝文件，但是vm受到网络限制，不能通过共享文件，也不能封装iso文件，
+  也不能通过远程桌面映射本地磁盘，这时候可以通过此方法拷贝文件。
+  example:
+  Copy-VMGuestFile -Source J:\patch.msu -Destination c:\temp\ -LocalToGuest -GuestUser "sa609079" 
+   -GuestPassword "123456Aa" -vm "ExtranetDMZ_JPBCPXNET01VWIN_XNET"
+ 
+PowerShell and Excel: Fast, Safe, and Reliable
+  https://blogs.technet.microsoft.com/heyscriptingguy/2014/01/10/powershell-and-excel-fast-safe-and-reliable/       
+ 
+#列出cluster下所有VM. 过滤只显示PoweredON"的vm,并统计有多少个powered on的
+  get-vm -Location JP_Site1_Prod_Cluster1 | Select-Object "PowerState" | Select-String "PoweredOn" | Measure-Object		
+  get-vm | Where-Object {$_.PowerState -eq "PoweredOn"}	#另一种实现方法
