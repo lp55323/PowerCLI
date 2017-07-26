@@ -39,3 +39,7 @@ PowerShell and Excel: Fast, Safe, and Reliable
 #列出cluster下所有VM. 过滤只显示PoweredON"的vm,并统计有多少个powered on的
   get-vm -Location JP_Site1_Prod_Cluster1 | Select-Object "PowerState" | Select-String "PoweredOn" | Measure-Object		
   get-vm | Where-Object {$_.PowerState -eq "PoweredOn"}	#另一种实现方法
+
+#Copy laptop file to esxi server datastore
+  $DataStore = Get-VMHost esx02.vmpros.lan | Get-Datastore ESX02_VMFS01 
+  Copy-DatastoreItem C:\vmpros\patch1\ $DataStore.DatastoreBrowserPath -Recurse 
