@@ -1,4 +1,4 @@
-Where-Object用法 ：
+#Where-Object用法 ：
   https://technet.microsoft.com/zh-cn/library/ee177028.aspx
   The Where-Object cmdlet provides a way for you to filter data returned by other cmdlets. 
   For example, by default the Get-Process cmdlet returns information about all the processes currently running on your computer. 
@@ -7,7 +7,7 @@ Where-Object用法 ：
   pipe the results through Where-Object  
 
 
-通过以下方式求和
+#通过以下方式求和
   (Get-VMhost -Location HK_Site2_Prod_Cluster_1).CpuUsageMhz 
   4294
   3925
@@ -21,11 +21,11 @@ Where-Object用法 ：
   Minimum  : 
   Property : 
 
-powershell中显示messagebox
+#powershell中显示messagebox
   http://michlstechblog.info/blog/powershell-show-a-messagebox/     
 
 
-Copy-VMGuestFile用法：
+#Copy-VMGuestFile用法：
   https://www.vmware.com/support/developer/PowerCLI/PowerCLI41/html/Copy-VMGuestFile.html   
   可以将本地文件(台式机,笔记本) 拷贝到vm 中. . 比如有的时候想要向vm中拷贝文件，但是vm受到网络限制，不能通过共享文件，也不能封装iso文件，
   也不能通过远程桌面映射本地磁盘，这时候可以通过此方法拷贝文件。
@@ -33,7 +33,7 @@ Copy-VMGuestFile用法：
   Copy-VMGuestFile -Source J:\patch.msu -Destination c:\temp\ -LocalToGuest -GuestUser "sa609079" 
    -GuestPassword "123456Aa" -vm "ExtranetDMZ_JPBCPXNET01VWIN_XNET"
  
-PowerShell and Excel: Fast, Safe, and Reliable
+#PowerShell and Excel: Fast, Safe, and Reliable
   https://blogs.technet.microsoft.com/heyscriptingguy/2014/01/10/powershell-and-excel-fast-safe-and-reliable/       
  
 #列出cluster下所有VM. 过滤只显示PoweredON"的vm,并统计有多少个powered on的
@@ -43,3 +43,17 @@ PowerShell and Excel: Fast, Safe, and Reliable
 #Copy laptop file to esxi server datastore
   $DataStore = Get-VMHost esx02.vmpros.lan | Get-Datastore ESX02_VMFS01 
   Copy-DatastoreItem C:\vmpros\patch1\ $DataStore.DatastoreBrowserPath -Recurse 
+
+#powercli get guest OS version reported by VMware tools versus configured when VM created or edited
+Get-VM | Sort-Object -Property Name |
+Get-View -Property @("Name", "Config.GuestFullName", "Guest.GuestFullName") |
+Select -Property Name,
+    @{N="Configured OS";E={$_.Config.GuestFullName}}, 
+    @{N="Running OS";E={$_.Guest.GuestFullName}} |
+Export-Csv report.csv -NoTypeInformation -UseCulture
+
+
+
+
+
+
