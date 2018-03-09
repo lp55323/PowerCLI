@@ -1,0 +1,38 @@
+$report =@() 
+Get-VM | Get-View | %{ 
+ $VMname = $_.Name 
+ $_.guest.net | where {$_.MacAddress -eq "00:50:56:4b:29:33"} | %{
+        $row = "" | Select VM, MAC
+        $row.VM = $VMname 
+        $row.MAC = $_.MacAddress 
+        $report += $row 
+  } 
+  } 
+$report
+
+命令结果
+VM                            MAC              
+--                            ---              
+DL_LINUX_FMN_NONPROD_INFRA_VM 00:50:56:87:04:17
+
+===========================================================================
+
+Get-VM | `
+  Get-NetworkAdapter | `
+  Where-Object {$_.MacAddress -eq "00:50:56:87:04:17"} | `
+  Format-List -Property *
+  
+  命令结果
+MacAddress       : 00:50:56:87:04:17
+WakeOnLanEnabled : True
+NetworkName      : CN_Site1_Migration_FMN1_StandAlone
+Type             : Vmxnet3
+ParentId         : VirtualMachine-vm-7407
+Parent           : DL_LINUX_FMN_NONPROD_INFRA_VM
+Uid              : /VIServer=intl\sa609079@jp-vc5:443/VirtualMachine=VirtualMachine-vm-7407/NetworkAdapter=4000/
+ConnectionState  : NotConnected, GuestControl, StartConnected
+ExtensionData    : VMware.Vim.VirtualVmxnet3
+Id               : VirtualMachine-vm-7407/4000
+Name             : Network adapter 1
+Client           : VMware.VimAutomation.ViCore.Impl.V1.VimClient
+===========================================================================
