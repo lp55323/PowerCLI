@@ -1,0 +1,5 @@
+Import-Csv J:\Desktop\dlvm.csv | ForEach-Object {
+
+Get-NetworkAdapter -vm $_.Name 
+
+} | Export-Csv J:\Desktop\dlvm01.csv -NoTypeInformation
