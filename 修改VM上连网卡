@@ -1,0 +1,2 @@
+$vm = Get-VM
+Get-NetworkAdapter -vm $vm | where {$_.Name -eq "Network adapter 1"} | Set-NetworkAdapter -NetworkName "VM Network" -Confirm:$false
