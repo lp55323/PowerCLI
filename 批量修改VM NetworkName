@@ -1,0 +1,5 @@
+Import-Csv J:\Desktop\5.5to6.5\a.csv | ForEach-Object{
+$vm = $_.VMName #cvs中的一列，以VMname开头的一列
+$NewNetworkName = $_.NewNetworkName #cvs中的一列，以NewNetworkName开头的一列
+Get-NetworkAdapter $vm | where {$_.Name -eq "Network adapter 1"} | Set-NetworkAdapter -NetworkName $NewNetworkName -Confirm:$false
+}
