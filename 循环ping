@@ -1,0 +1,17 @@
+$ServerName = Get-Content "J:\Desktop\5.5to6.5\Migration_VM Ping List 3.18.txt" 
+ 
+foreach ($Server in $ServerName) { 
+if (test-Connection -ComputerName $Server -Count 2 -Quiet ) {
+write-host "$Server is Pinging " -b Green 
+} else 
+{Write-Host "$Server not pinging" -BackgroundColor Red 
+}     
+} 
+=================Result==================
+cnfil0031win is Pinging 
+CNFIL3005WIN is Pinging 
+cnfil0030win is Pinging 
+cnfil0049win-decommission 2018/02/12 not pinging
+CNFIL3006WIN is Pinging 
+CNFIL3013WIN is Pinging 
+CNFIL3002WIN is Pinging 
