@@ -1,0 +1,4 @@
+$vms = Get-Datacenter Dalian | Get-Folder Windows |Get-VMHost cndal6502esx.intl.intlroot.fid-intl.com|  Get-VM | Where-Object {$_.powerstate -eq ‘PoweredOn’}
+ForEach-Object{
+Shutdown-VMGuest -vm $vms -Confirm:$false | where {$_.Name}
+} 
