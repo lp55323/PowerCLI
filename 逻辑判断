@@ -1,0 +1,7 @@
+
+$Servers = (get-vmhost | Where-Object{($_.Manufacturer -eq "HP") -and($_.Name -notlike "hkcen*")}).Name
+foreach($Server in $Servers)
+{
+$Server.Split(".")[0]
+}
+
