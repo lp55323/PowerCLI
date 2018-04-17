@@ -1,0 +1,3 @@
+$vhost = Get-VMHost cndal6530esx.cn.fid-intl.com
+$vds = Get-VDSwitch CN_Site1_Prod_FMN1_StandAlone
+$uplinks = $vhost | Get-VDSwitch | Get-VDPort -Uplink | where {$_.ProxyHost -like $vhost.Name}
