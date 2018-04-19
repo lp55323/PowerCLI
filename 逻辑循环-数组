@@ -1,0 +1,22 @@
+
+$Servers = (get-vmhost | Where-Object{($_.Manufacturer -eq "HP") -and($_.Name -notlike "hkcen*")}).Name
+foreach($Server in $Servers)
+{
+$Server.Split(".")[0]
+}
+
+======================================
+
+$infos = Get-VMHost | where {$_.Name -like  "cndal*"} | get-vm | Get-HardDisk | select Parent, Name, CapacityGB,StorageFormat,Filename
+$result = @()
+foreach($info in $infos)
+{
+         $result += New-Object psobject -Property @{
+                        Parent         = $info.Parent
+                        Name           = $info.Name
+                        CapacityGB     = $info.CapacityGB
+                        StorageFormat  = $info.StorageFormat
+                        Datastore      = $info.Filename.Split(" ")[0].replace("[","").replace("]","") 
+                        }                    
+} 
+$result | select Parent, Name, CapacityGB,StorageFormat,Datastore | export-csv J:\Desktop\cndal6533esx.csv -NoTypeInformation
