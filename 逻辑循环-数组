@@ -20,3 +20,22 @@ foreach($info in $infos)
                         }                    
 } 
 $result | select Parent, Name, CapacityGB,StorageFormat,Datastore | export-csv J:\Desktop\cndal6533esx.csv -NoTypeInformation
+
+=========================================
+
+
+$Hosts = Get-Datacenter "HK - KVH (HKKV)"| Get-Folder | where {$_.Name -ilike "*DMZ" -or $_.Name -ilike "*TRZ"}| Get-VMHost 
+
+ 
+$VMGuests = Get-VMHost $Hosts | Get-VM | Get-VMGuest | select VM,IPAddress,Nics 
+
+$result = @()
+foreach ($VMGuest in $VMGuests){
+    $result += New-Object psobject -Property @{
+        VM =$VMGuest.VM
+        IPAddress = [string]$VMGuest.IPAddress
+        Nics= [string]$VMGuest.Nics
+        }
+}
+
+[PSCustomObject]$result | select VM, IPAddress, Nics | export-csv J:\Desktop\a.csv -NoTypeInformation
