@@ -1,0 +1,8 @@
+ [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+ $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+ $OpenFileDialog.Title = "Open"
+ $OpenFileDialog.initialDirectory = $initialDirectory
+ $OpenFileDialog.filter = "CSV(Comma delimited)(*.csv)| *.csv"
+ $OpenFileDialog.ShowDialog() | Out-Null
+ $filepath = $OpenFileDialog.filename
+ import-csv $filepath  
